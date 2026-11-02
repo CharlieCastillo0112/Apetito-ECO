@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApetitoEco - Configuración de Calendario de Entrega</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .calendar-wrapper, .calendar-settings-panel {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            padding: 1.5rem;
+        }
+        .calendar-grid {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 4px;
+        }
+        .calendar-grid th {
+            text-align: center;
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+        .day-cell {
+            height: 90px;
+            vertical-align: top;
+            padding: 6px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            background-color: #ffffff;
+            font-size: 0.8rem;
+        }
+        .day-cell.active-delivery {
+            background-color: #d1e7dd;
+            border-color: #a3cfbb;
+        }
+        .day-cell.other-month {
+            background-color: #f8f9fa;
+            color: #adb5bd;
+        }
+        .day-number {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center fw-bold fs-4" href="indexApetitoECO.html">
+                <i class="bi bi-box-seam me-2"></i> ApetitoEco
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
+                    <li class="nav-item"><a class="nav-link" href="indexApetitoECO.html"><i class="bi bi-grid-fill me-1"></i>Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="directorioRestaurantes.html"><i class="bi bi-shop me-1"></i>Restaurantes</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="calendarioEntrega.html"><i class="bi bi-calendar3 me-1"></i>Calendario</a></li>
+                    <li class="nav-item"><a class="nav-link" href="seguimientoPedido.html"><i class="bi bi-truck me-1"></i>Seguimiento</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-2 ms-auto">
+                    <a href="pedidoCompletado.html" class="btn btn-warning position-relative">
+                        <i class="bi bi-cart-fill"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <div class="row mb-3">
+            <div class="col-12 text-center">
+                <h2 class="fw-bold text-dark">Configuración de Calendario de Entrega</h2>
+                <p class="text-muted">Personaliza tus días y horarios de entrega semanal para tus suscripciones de comida casera.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- CALENDARIO INTERACTIVO (COLUMNA IZQUIERDA / PRINCIPAL) -->
+            <div class="col-lg-8">
+                <div class="calendar-wrapper">
+                    <!-- ENCABEZADO MES -->
+                    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                        <h3 class="h4 fw-bold text-success mb-0">Octubre 2026</h3>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-secondary btn-sm"><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn btn-outline-secondary btn-sm">Mes Actual</button>
+                            <button class="btn btn-outline-secondary btn-sm"><i class="bi bi-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- TABLA GRID CALENDARIO -->
+                    <div class="table-responsive">
+                        <table class="calendar-grid">
+                            <thead>
+                                <tr>
+                                    <th>Lun</th>
+                                    <th>Mar</th>
+                                    <th>Mié</th>
+                                    <th>Jue</th>
+                                    <th>Vie</th>
+                                    <th>Sáb</th>
+                                    <th>Dom</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="day-cell other-month"><span class="day-number">29</span></td>
+                                    <td class="day-cell other-month"><span class="day-number">30</span></td>
+                                    <td class="day-cell"><span class="day-number">1</span></td>
+                                    <td class="day-cell"><span class="day-number">2</span></td>
+                                    <td class="day-cell"><span class="day-number">3</span></td>
+                                    <td class="day-cell active-delivery">
+                                        <span class="day-number">4</span>
+                                        <select class="form-select form-select-sm p-0 px-1 style-select">
+                                            <option>13:00-14:00</option>
+                                            <option selected>14:00-15:00</option>
+                                        </select>
+                                    </td>
+                                    <td class="day-cell active-delivery">
+                                        <span class="day-number">5</span>
+                                        <select class="form-select form-select-sm p-0 px-1 style-select">
+                                            <option selected>13:00-14:00</option>
+                                            <option>14:00-15:00</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="day-cell active-delivery">
+                                        <span class="day-number">6</span>
+                                        <select class="form-select form-select-sm p-0 px-1">
+                                            <option selected>13:00-14:00</option>
+                                            <option>14:00-15:00</option>
+                                        </select>
+                                    </td>
+                                    <td class="day-cell active-delivery">
+                                        <span class="day-number">7</span>
+                                        <select class="form-select form-select-sm p-0 px-1">
+                                            <option selected>13:00-14:00</option>
+                                            <option>14:00-15:00</option>
+                                        </select>
+                                    </td>
+                                    <td class="day-cell active-delivery">
+                                        <span class="day-number">8</span>
+                                        <select class="form-select form-select-sm p-0 px-1">
+                                            <option selected>13:00-14:00</option>
+                                            <option>14:00-15:00</option>
+                                        </select>
+                                    </td>
+                                    <td class="day-cell active-delivery">
+                                        <span class="day-number">9</span>
+                                        <select class="form-select form-select-sm p-0 px-1">
+                                            <option selected>13:00-14:00</option>
+                                            <option>14:00-15:00</option>
+                                        </select>
+                                    </td>
+                                    <td class="day-cell active-delivery">
+                                        <span class="day-number">10</span>
+                                        <select class="form-select form-select-sm p-0 px-1">
+                                            <option selected>13:00-14:00</option>
+                                            <option>14:00-15:00</option>
+                                        </select>
+                                    </td>
+                                    <td class="day-cell"><span class="day-number">11</span></td>
+                                    <td class="day-cell"><span class="day-number">12</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="day-cell active-delivery">
+                                        <span class="day-number">13</span>
+                                        <select class="form-select form-select-sm p-0 px-1">
+                                            <option selected>13:00-14:00</option>
+                                        </select>
+                                    </td>
+                                    <td class="day-cell active-delivery">
+                                        <span class="day-number">14</span>
+                                        <select class="form-select form-select-sm p-0 px-1">
+                                            <option selected>13:00-14:00</option>
+                                        </select>
+                                    </td>
+                                    <td class="day-cell active-delivery">
+                                        <span class="day-number">15</span>
+                                        <select class="form-select form-select-sm p-0 px-1">
+                                            <option selected>13:00-14:00</option>
+                                        </select>
+                                    </td>
+                                    <td class="day-cell active-delivery">
+                                        <span class="day-number">16</span>
+                                        <select class="form-select form-select-sm p-0 px-1">
+                                            <option selected>13:00-14:00</option>
+                                        </select>
+                                    </td>
+                                    <td class="day-cell active-delivery">
+                                        <span class="day-number">17</span>
+                                        <select class="form-select form-select-sm p-0 px-1">
+                                            <option selected>13:00-14:00</option>
+                                        </select>
+                                    </td>
+                                    <td class="day-cell"><span class="day-number">18</span></td>
+                                    <td class="day-cell"><span class="day-number">19</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL DE CONFIGURACIÓN (COLUMNA DERECHA) -->
+            <div class="col-lg-4">
+                <div class="calendar-settings-panel">
+                    <h3 class="h4 fw-bold text-success border-bottom pb-2 mb-3">Ajustes Predeterminados</h3>
+                    
+                    <form onsubmit="saveCalendarSettings(event)">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">SELECCIONAR PLAN</label>
+                            <select class="form-select">
+                                <option selected>Plan Estudiantil Económico</option>
+                                <option>Menú Ejecutivo</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">HORARIO POR DEFECTO</label>
+                            <select class="form-select">
+                                <option>13:00 - 14:00 PM</option>
+                                <option selected>14:00 - 15:00 PM</option>
+                                <option>15:00 - 16:00 PM</option>
+                            </select>
+                        </div>
+
+                        <div class="form-check form-switch mb-4">
+                            <input class="form-check-input" type="checkbox" id="pauseDelivery">
+                            <label class="form-check-label fw-semibold" for="pauseDelivery">Pausar entregas (Vacaciones / Exámenes)</label>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success fw-bold">Guardar Calendario</button>
+                            <button type="reset" class="btn btn-outline-secondary">Cancelar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function saveCalendarSettings(event) {
+            event.preventDefault();
+            alert("¡Configuración de calendario guardada correctamente!");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApetitoEco - Seguimiento de Pedido</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .order-summary-card, .live-map-wrapper {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            padding: 1.5rem;
+        }
+        .item-card-img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        .tracking-timeline {
+            list-style: none;
+            padding-left: 0;
+            position: relative;
+        }
+        .tracking-timeline::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            bottom: 15px;
+            left: 15px;
+            width: 3px;
+            background-color: #e9ecef;
+        }
+        .tracking-step {
+            position: relative;
+            padding-left: 45px;
+            margin-bottom: 1.5rem;
+        }
+        .step-icon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        .map-canvas-placeholder {
+            height: 360px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center fw-bold fs-4" href="indexApetitoECO.html">
+                <i class="bi bi-box-seam me-2"></i> ApetitoEco
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
+                    <li class="nav-item"><a class="nav-link" href="indexApetitoECO.html"><i class="bi bi-grid-fill me-1"></i>Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="directorioRestaurantes.html"><i class="bi bi-shop me-1"></i>Restaurantes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="calendarioEntrega.html"><i class="bi bi-calendar3 me-1"></i>Calendario</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="seguimientoPedido.html"><i class="bi bi-truck me-1"></i>Seguimiento</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-2 ms-auto">
+                    <a href="pedidoCompletado.html" class="btn btn-warning position-relative">
+                        <i class="bi bi-cart-fill"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <div class="row mb-3">
+            <div class="col-12 text-center">
+                <h2 class="fw-bold text-dark">Seguimiento de Pedido en Vivo</h2>
+                <p class="text-muted">Estado del informe de tu orden en tiempo real para tu entrega programada de hoy.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- DETALLES DEL PEDIDO (COLUMNA IZQUIERDA) -->
+            <div class="col-lg-5">
+                <div class="order-summary-card">
+                    <h3 class="h4 fw-bold text-success border-bottom pb-2 mb-3">Detalles del Pedido</h3>
+                    
+                    <!-- Tarjetas pequeñas de la orden -->
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <div class="card p-2 border shadow-sm">
+                                <img src="https://www.themealdb.com/images/media/meals/wvxrrw1511578971.jpg" class="item-card-img mb-2" alt="Plan Estudiantil">
+                                <h6 class="category-badge fw-bold fs-6 mb-1 text-truncate">Plan Estudiantil</h6>
+                                <p class="restaurant-name text-muted small mb-0">Cocina Express</p>
+                                <p class="quantity text-secondary small mb-0">Lunes a Viernes</p>
+                                <p class="price fw-bold text-success mb-0">$380 MXN</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card p-2 border shadow-sm">
+                                <img src="https://www.themealdb.com/images/media/meals/uprfqt1511739501.jpg" class="item-card-img mb-2" alt="Menú Ejecutivo">
+                                <h6 class="category-badge fw-bold fs-6 mb-1 text-truncate">Menú Ejecutivo</h6>
+                                <p class="restaurant-name text-muted small mb-0">Fonda Doña Rosa</p>
+                                <p class="quantity text-secondary small mb-0">Lunes a Viernes</p>
+                                <p class="price fw-bold text-success mb-0">$450 MXN</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-3">Línea de Tiempo del Envió</h5>
+
+                    <!-- TIMELINE -->
+                    <ul class="tracking-timeline mb-4">
+                        <li class="tracking-step">
+                            <div class="step-icon bg-success text-white"><i class="bi bi-check"></i></div>
+                            <div class="fw-bold">Pedido Confirmado <span class="badge bg-success ms-2">Completado</span></div>
+                            <div class="text-muted small">09:30 AM - Pago registrado correctamente</div>
+                        </li>
+                        <li class="tracking-step">
+                            <div class="step-icon bg-success text-white"><i class="bi bi-check"></i></div>
+                            <div class="fw-bold">En Preparación <span class="badge bg-success ms-2">Completado</span></div>
+                            <div class="text-muted small">11:15 AM - Cocina preparando platillos frescos</div>
+                        </li>
+                        <li class="tracking-step">
+                            <div class="step-icon bg-warning text-dark"><i class="bi bi-truck"></i></div>
+                            <div class="fw-bold">Enviado <span class="badge bg-warning text-dark ms-2">En Camino</span></div>
+                            <div class="text-muted small">13:10 PM - Repartidor asignado en ruta de entrega</div>
+                        </li>
+                        <li class="tracking-step">
+                            <div class="step-icon bg-secondary text-white"><i class="bi bi-house-door"></i></div>
+                            <div class="fw-bold text-muted">Entregado <span class="badge bg-secondary ms-2">Pendiente</span></div>
+                            <div class="text-muted small">Estimado: 13:45 PM</div>
+                        </li>
+                    </ul>
+
+                    <button class="btn btn-primary w-100 fw-bold" onclick="contactDelivery()">
+                        <i class="bi bi-telephone-fill me-2"></i>Contactar Repartidor
+                    </button>
+                </div>
+            </div>
+
+            <!-- MAPA EN VIVO / MAP WRAPPER (COLUMNA DERECHA) -->
+            <div class="col-lg-7">
+                <div class="live-map-wrapper">
+                    <h3 class="h4 fw-bold text-success border-bottom pb-2 mb-3">Ubicación del Repartidor</h3>
+                    
+                    <!-- Simulador de Mapa -->
+                    <div class="map-canvas-placeholder mb-3 text-center p-4">
+                        <div class="position-absolute top-50 start-50 translate-middle w-100">
+                            <i class="bi bi-geo-alt-fill text-danger display-3 animate-bounce"></i>
+                            <h5 class="fw-bold text-dark mt-2">Ruta de Entrega: Cocina Express &rarr; Campus Norte</h5>
+                            <p class="text-secondary small mb-3">El repartidor se encuentra a 1.2 km de tu punto de recepción.</p>
+                            <span class="badge bg-dark p-2 fs-6"><i class="bi bi-clock me-1"></i>Llegada en aprox. 12 minutos</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-light p-3 rounded border d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="mb-0 fw-bold">Repartidor: Carlos Gómez</p>
+                            <p class="mb-0 text-muted small">Vehículo: Motocicleta Honda Eco (Placas: 48ABC)</p>
+                        </div>
+                        <a href="calendarioEntrega.html" class="btn btn-outline-success btn-sm fw-bold">Ver Mis Entregas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function contactDelivery() {
+            alert("Llamando al repartidor Carlos Gómez (Tel: 55-9876-5432)...");
+        }
+    </script>
+</body>
+</html>
